@@ -41,7 +41,7 @@ type Config struct {
 	StorageType      string
 	CORSOrigin       string
 	MaildirPath      string
-	InviteJim        bool
+	// InviteJim        bool
 	Storage          storage.Storage
 	MessageChan      chan *data.Message
 	Assets           func(asset string) ([]byte, error)
@@ -66,7 +66,7 @@ type OutgoingSMTP struct {
 var cfg = DefaultConfig()
 
 // Jim is a monkey
-var Jim = &monkey.Jim{}
+// var Jim = &monkey.Jim{}
 
 // Configure configures stuff
 func Configure() *Config {
@@ -92,12 +92,12 @@ func Configure() *Config {
 		log.Fatalf("Invalid storage type %s", cfg.StorageType)
 	}
 
-	Jim.Configure(func(message string, args ...interface{}) {
-		log.Printf(message, args...)
-	})
-	if cfg.InviteJim {
-		cfg.Monkey = Jim
-	}
+	// Jim.Configure(func(message string, args ...interface{}) {
+	// 	log.Printf(message, args...)
+	// })
+	// if cfg.InviteJim {
+	// 	cfg.Monkey = Jim
+	// }
 
 	if len(cfg.OutgoingSMTPFile) > 0 {
 		b, err := ioutil.ReadFile(cfg.OutgoingSMTPFile)
@@ -126,7 +126,7 @@ func RegisterFlags() {
 	flag.StringVar(&cfg.MongoColl, "mongo-coll", envconf.FromEnvP("MH_MONGO_COLLECTION", "messages").(string), "MongoDB collection, e.g. messages")
 	flag.StringVar(&cfg.CORSOrigin, "cors-origin", envconf.FromEnvP("MH_CORS_ORIGIN", "").(string), "CORS Access-Control-Allow-Origin header for API endpoints")
 	flag.StringVar(&cfg.MaildirPath, "maildir-path", envconf.FromEnvP("MH_MAILDIR_PATH", "").(string), "Maildir path (if storage type is 'maildir')")
-	flag.BoolVar(&cfg.InviteJim, "invite-jim", envconf.FromEnvP("MH_INVITE_JIM", false).(bool), "Decide whether to invite Jim (beware, he causes trouble)")
+	// flag.BoolVar(&cfg.InviteJim, "invite-jim", envconf.FromEnvP("MH_INVITE_JIM", false).(bool), "Decide whether to invite Jim (beware, he causes trouble)")
 	flag.StringVar(&cfg.OutgoingSMTPFile, "outgoing-smtp", envconf.FromEnvP("MH_OUTGOING_SMTP", "").(string), "JSON file containing outgoing SMTP servers")
-	Jim.RegisterFlags()
+	// Jim.RegisterFlags()
 }
